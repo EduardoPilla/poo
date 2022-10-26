@@ -5,6 +5,10 @@
  */
 package Telas;
 
+import BD.CadastroDAO;
+import Classes.Login;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Unicesumar
@@ -48,6 +52,11 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel3.setText("Senha:");
 
         BtEntrar.setText("Entrar");
+        BtEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtEntrarActionPerformed(evt);
+            }
+        });
 
         BtCadastrar.setText("Cadastrar");
         BtCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -118,6 +127,26 @@ public class TelaLogin extends javax.swing.JFrame {
         tlcadastro.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtCadastrarActionPerformed
+
+    private void BtEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtEntrarActionPerformed
+        Login login = new Login();
+        login.login = TFLogin.getText();
+        login.senha = String.valueOf(PFSenha.getPassword());
+        
+        CadastroDAO dao = new CadastroDAO();
+        try {
+            if ( dao.autenticaUsuarioBoleano(login) ){
+                JOptionPane.showMessageDialog(null, "Seja bem vindo " + login.login);
+                TelaInicial tela = new TelaInicial();
+                tela.setVisible(true);
+                this.dispose();
+            }  else {
+                JOptionPane.showMessageDialog(null, "usuário ou senha inválidos.");
+            }          
+        } catch ( Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_BtEntrarActionPerformed
 
     /**
      * @param args the command line arguments

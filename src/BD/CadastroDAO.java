@@ -3,6 +3,7 @@ package BD;
 import Classes.Login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -41,4 +42,27 @@ public class CadastroDAO {
             
         }
         
+        public boolean autenticaUsuarioBoleano(Login login) throws Exception{
+            String sql = "Select * from login where login = ?  and senha = ? ";
+            
+            Connection conn = null;
+            PreparedStatement pstm = null;
+            boolean resp = false;
+            
+            try{
+                conn = ConnectionFactory.criarConexao();
+                pstm = conn.prepareStatement(sql);
+                
+                pstm.setString(1, login.login);
+                pstm.setString(2, login.senha);
+                
+                ResultSet result = pstm.executeQuery();
+                if ( result.next() )
+                    resp = true;
+                
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "UsuárioDAO: " + e);
+            }
+            return resp;            
+        }        
 }
