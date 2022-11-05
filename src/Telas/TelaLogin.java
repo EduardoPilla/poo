@@ -134,9 +134,23 @@ public class TelaLogin extends javax.swing.JFrame {
         login.senha = String.valueOf(PFSenha.getPassword());
         
         CadastroDAO dao = new CadastroDAO();
+//        try {
+//            if ( dao.autenticaUsuarioBoleano(login) ){
+//                JOptionPane.showMessageDialog(null, "Seja bem vindo " + login.login);
+//                TelaInicial tela = new TelaInicial();
+//                tela.setVisible(true);
+//                this.dispose();
+//            }  else {
+//                JOptionPane.showMessageDialog(null, "usuário ou senha inválidos.");
+//            }          
+//        } catch ( Exception e) {
+//            JOptionPane.showMessageDialog(null, e);
+//        }
         try {
-            if ( dao.autenticaUsuarioBoleano(login) ){
-                JOptionPane.showMessageDialog(null, "Seja bem vindo " + login.login);
+            Login usuario = new Login();
+            usuario = dao.autenticaUsuario(login); 
+            if ( usuario.login.equals(login.login) && usuario.senha.equals(login.senha) ){
+                JOptionPane.showMessageDialog(null, "Seja bem vindo " + usuario.nome);
                 TelaInicial tela = new TelaInicial();
                 tela.setVisible(true);
                 this.dispose();
@@ -145,7 +159,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }          
         } catch ( Exception e) {
             JOptionPane.showMessageDialog(null, e);
-        }
+        }        
     }//GEN-LAST:event_BtEntrarActionPerformed
 
     /**
