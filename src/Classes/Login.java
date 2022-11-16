@@ -1,5 +1,5 @@
 package Classes;
 
 public class Login {
-    public String login, senha, nome;
+    public String login, data_nascimento, endereco, senha, nome;
 }
